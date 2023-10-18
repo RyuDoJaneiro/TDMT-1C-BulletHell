@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Schema;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -15,16 +16,23 @@ public class Enemy : Character
     [Header("Enemy Behaviour")]
     [SerializeField] private EnemyBehaviour behaviourType;
     [SerializeField] private float minDistance = 0.1f;
+    [SerializeField] private int attackValue = 1;
+    [SerializeField] private float timeBetweenAttacks = 0.5f;
+    private float timer;
     private Transform playerReference;
 
     private void Awake()
     {
         playerReference = GameObject.Find("Player").GetComponent<Transform>();
+        animator = GetComponent<CharacterAnimator>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
+        timer += Time.deltaTime;
+
         NearPlayer();
+        HandleUpdate();
     }
 
     private void NearPlayer()
@@ -37,10 +45,13 @@ public class Enemy : Character
 
         if (Vector2.Distance(transform.position, playerReference.position) > minDistance)
         {
-            MoveCharacter(new Vector3(playerReference.transform.position.x, playerReference.transform.position.y) - transform.position);
-        } 
+            MoveCharacter(new Vector2(playerReference.position.x - transform.position.x, playerReference.position.y - transform.position.y));
+            isMoving = true;
+        }
         else
         {
+            isMoving = false;
+
             if (isDying)
                 return;
 
@@ -50,6 +61,13 @@ public class Enemy : Character
                 case EnemyBehaviour.Explode:
                     StartCoroutine(Explode());
                     break;
+                case EnemyBehaviour.Chase:
+                    if (timer > timeBetweenAttacks)
+                    {
+                        playerReference.GetComponent<PlayerController>().TakeDamage(attackValue);
+                        timer = 0f;
+                    }
+                    break;
                 default:
                     Debug.LogError("This enemy has not behaviour");
                     break;
@@ -57,12 +75,15 @@ public class Enemy : Character
         }
     }
 
-    // Explosive enemy death logic
+    // Explosive enemy logic
     private IEnumerator Explode()
     {
-        Debug.Log($"{name}: About to explode!");
+        Debug.Log($"{name}: is about to explode!");
         StartCoroutine(Death());
-        yield return new WaitForSeconds(1f);
-        playerReference.GetComponent<PlayerController>().TakeDamage(5);
+
+        yield return new WaitForSeconds(0.5f);
+
+        if (Vector2.Distance(transform.position, playerReference.position) < minDistance)
+            playerReference.GetComponent<PlayerController>().TakeDamage(attackValue);
     }
 }

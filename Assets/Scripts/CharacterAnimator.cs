@@ -20,14 +20,17 @@ public class CharacterAnimator : MonoBehaviour
     [SerializeField] private List<Sprite> idleRightSprites = new List<Sprite>();
     [SerializeField] private List<Sprite> idleLeftSprites = new List<Sprite>();
 
+    [SerializeField] private List<Sprite> deathSprites = new List<Sprite>();
+
     [SerializeField] FacingDirection defaultDirection = FacingDirection.Down;
 
     // Parameters    
     public float MoveX { get; set; }
     public float MoveY { get; set; }
-    public float lastMoveX { get; set; }
-    public float lastMoveY { get; set; }
+    public float LastMoveX { get; set; }
+    public float LastMoveY { get; set; }
     public bool IsMoving { get; set; }
+    public bool IsDying { get; set; }
 
 
     // States
@@ -63,6 +66,8 @@ public class CharacterAnimator : MonoBehaviour
         idleRightAnim = new SpriteAnimator(idleRightSprites, spriteRenderer);
         idleLeftAnim = new SpriteAnimator(idleLeftSprites, spriteRenderer);
 
+        deathAnim = new SpriteAnimator(deathSprites, spriteRenderer, 0.20f);
+
         SetFacingDirection(defaultDirection);
 
         currentAnim = walkDownAnim;
@@ -94,15 +99,23 @@ public class CharacterAnimator : MonoBehaviour
         else
         {
             // Play idle animations
-            if (lastMoveX == 1)
+            if (LastMoveX == 1)
                 currentAnim = idleRightAnim;
-            else if (lastMoveX == -1)
+            else if (LastMoveX == -1)
                 currentAnim = idleLeftAnim;
-            else if (lastMoveY == 1)
+            else if (LastMoveY == 1)
                 currentAnim = idleUpAnim;
-            else if (lastMoveY == -1)
+            else if (LastMoveY == -1)
                 currentAnim = idleDownAnim;
         }
+
+        if (IsDying)
+        {
+            currentAnim = deathAnim;
+        }
+
+        if (currentAnim != prevAnim || IsMoving != wasPreviouslyMove)
+            currentAnim.Start();
 
         currentAnim.HandleUpdate();
         wasPreviouslyMove = IsMoving;
@@ -111,18 +124,23 @@ public class CharacterAnimator : MonoBehaviour
     public void SetFacingDirection(FacingDirection dir)
     {
         if (dir == FacingDirection.Right)
-            lastMoveX = 1;
+            LastMoveX = 1;
         else if (dir == FacingDirection.Left)
-            lastMoveX = -1;
+            LastMoveX = -1;
         else if (dir == FacingDirection.Down)
-            lastMoveY = -1;
+            LastMoveY = -1;
         else if (dir == FacingDirection.Up)
-            lastMoveY = 1;
+            LastMoveY = 1;
     }
 
     public FacingDirection DefaultDirection
     {
         get => defaultDirection;
+    }
+
+    private void HandleBasicAnimations()
+    {
+        
     }
 }
 
