@@ -20,11 +20,19 @@ public class Enemy : Character
     [SerializeField] private float timeBetweenAttacks = 0.5f;
     private float timer;
     private Transform playerReference;
+    private Vector3 playerPosition;
+    private BulletSpawner bulletSpawnerReference;
 
     private void Awake()
     {
         playerReference = GameObject.Find("Player").GetComponent<Transform>();
+        bulletSpawnerReference = GetComponent<BulletSpawner>();
         animator = GetComponent<CharacterAnimator>();
+    }
+
+    private void Update()
+    {
+        playerPosition = playerReference.position;
     }
 
     private void FixedUpdate()
@@ -45,7 +53,7 @@ public class Enemy : Character
 
         if (Vector2.Distance(transform.position, playerReference.position) > minDistance)
         {
-            MoveCharacter(new Vector2(playerReference.position.x - transform.position.x, playerReference.position.y - transform.position.y));
+            MoveCharacter(new Vector2(playerReference.position.x - transform.position.x, playerReference.position.y - transform.position.y).normalized);
             isMoving = true;
         }
         else
@@ -68,6 +76,20 @@ public class Enemy : Character
                         timer = 0f;
                     }
                     break;
+                case EnemyBehaviour.Shoot:
+                    if (timer > timeBetweenAttacks)
+                    {
+                        if (!bulletSpawnerReference)
+                        {
+                            Debug.LogError($"{name}: Buller spawner is null!");
+                            break;
+                        }
+
+                        bulletSpawnerReference.ProjectileDirection = new Vector2(playerPosition.x, playerPosition.y);
+                        bulletSpawnerReference.ShootProjectile();
+                        timer = 0f;
+                    }
+                    break;
                 default:
                     Debug.LogError("This enemy has not behaviour");
                     break;
@@ -86,4 +108,5 @@ public class Enemy : Character
         if (Vector2.Distance(transform.position, playerReference.position) < minDistance)
             playerReference.GetComponent<PlayerController>().TakeDamage(attackValue);
     }
+
 }
