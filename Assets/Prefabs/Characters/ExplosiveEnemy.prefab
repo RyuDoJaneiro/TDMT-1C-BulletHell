@@ -49,12 +49,12 @@ MonoBehaviour:
   colliderSize: {x: 1, y: 1}
   characterName: Wild Fire
   characterHealth: 100
-  characterSpeed: 1
+  characterSpeed: 5
   isMoving: 0
   isDying: 0
   solidObjectLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   behaviourType: 0
   minDistance: 1
   attackValue: 100
