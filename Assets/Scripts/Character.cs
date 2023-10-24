@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterAnimator))]
@@ -11,10 +12,12 @@ public class Character : MonoBehaviour
 
     [Header("Character Info")]
     [SerializeField] private string characterName;
+    [SerializeField] private int isEnemyOf;
 
     [Header("Character Stats")]
     [SerializeField] protected int characterHealth = 100;
     [SerializeField] private float characterSpeed = 8;
+    [SerializeField] protected int characterAttackValue = 1;
 
     [Header("Character Actions")]
     public bool isMoving = false;
@@ -24,6 +27,9 @@ public class Character : MonoBehaviour
     [Header("Solid Objects Layer")]
     [SerializeField] private LayerMask solidObjectLayer;
 
+    [Header("Bullet prefab")]
+    [SerializeField] private GameObject bulletPrefab;
+ 
     private void Awake()
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -67,6 +73,18 @@ public class Character : MonoBehaviour
         yield return null;
     }
 
+    public IEnumerator Shoot(Vector2 direction)
+    {
+        GameObject spawnedBullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+        spawnedBullet.TryGetComponent<Projectile>(out var component);
+        component.ProjectileDirection = direction;
+        component.AttackValue = characterAttackValue;
+        component.Objetive = isEnemyOf;
+
+        yield return new WaitForSeconds(8f);
+        Destroy(spawnedBullet);
+    }
+
     public void TakeDamage(int damageAmount)
     {
         characterHealth -= damageAmount;
@@ -75,9 +93,14 @@ public class Character : MonoBehaviour
 
     private bool IsWalkable(Vector2 nextPos)
     {
-        if (Physics2D.OverlapBox(nextPos, colliderSize, solidObjectLayer))
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(nextPos, colliderSize, solidObjectLayer);
+
+        foreach (Collider2D collider in colliders)
         {
-            return false;
+            if (collider.gameObject != this.gameObject)
+            {
+                return false;
+            }
         }
 
         return true;

@@ -2,28 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IPooledObject
+public class Projectile : MonoBehaviour
 {
-    public void OnObjectSpawn();
-}
+    [SerializeField] private float projectileSpeed;
+    private Vector2 projectileDirection;
+    private int attackValue;
+    private int objetive;
 
-public class Projectile : MonoBehaviour, IPooledObject
-{
-    private float projectileSpeed;
-    public Vector2 projectileDirection;
+    public float ProjectileSpeed { get { return projectileSpeed; } set { projectileSpeed = value; } }
+    public Vector2 ProjectileDirection { get { return projectileDirection; } set { projectileDirection = value; } }
+    public int AttackValue { get { return attackValue; } set { attackValue = value; } }
+    public int Objetive { get { return objetive; } set { objetive = value; } }
 
-    public float ProjectileSpeed { get { return projectileSpeed; } set {  projectileSpeed = value; } }
-    public Vector2 ProjectileDirection { get {  return projectileDirection; } set { projectileDirection = value; } }
-
-    public void OnObjectSpawn()
+    public void Start()
     {
-        
+        Vector2 normalizedDirection = projectileDirection.normalized;
+
+        transform.rotation = Quaternion.Euler(new Vector3(0, 0, (Mathf.Atan2(normalizedDirection.y, normalizedDirection.x) * Mathf.Rad2Deg) - 45));
+
+        GetComponent<Rigidbody2D>().velocity = normalizedDirection * projectileSpeed;
     }
 
-    private void Start()
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        Vector2 direction = new Vector2(projectileDirection.x - transform.position.x, projectileDirection.y - transform.position.y).normalized;
-
-        GetComponent<Rigidbody2D>().velocity = direction * projectileSpeed;
+        if (other.gameObject.layer == objetive)
+        {
+            other.gameObject.GetComponent<Character>().TakeDamage(attackValue);
+        }
     }
 }

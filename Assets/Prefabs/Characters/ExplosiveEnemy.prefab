@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9034695127801802546}
   - component: {fileID: 390449018999764343}
   - component: {fileID: 1768230502039569881}
+  - component: {fileID: -328126343108221079}
   m_Layer: 7
   m_Name: ExplosiveEnemy
   m_TagString: Untagged
@@ -48,16 +49,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colliderSize: {x: 1, y: 1}
   characterName: Wild Fire
+  isEnemyOf: 3
   characterHealth: 100
   characterSpeed: 5
+  characterAttackValue: 1
   isMoving: 0
   isDying: 0
   solidObjectLayer:
     serializedVersion: 2
     m_Bits: 0
+  bulletPrefab: {fileID: 0}
   behaviourType: 0
   minDistance: 1
-  attackValue: 100
   timeBetweenAttacks: 0.5
 --- !u!114 &1768230502039569881
 MonoBehaviour:
@@ -101,7 +104,53 @@ MonoBehaviour:
   - {fileID: 818494252, guid: 924dba2b6fbb8ef458904e1c19ce9798, type: 3}
   - {fileID: -1441252649, guid: 924dba2b6fbb8ef458904e1c19ce9798, type: 3}
   - {fileID: 1273267871, guid: 924dba2b6fbb8ef458904e1c19ce9798, type: 3}
+  attackSprites: []
   defaultDirection: 1
+--- !u!61 &-328126343108221079
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3529954088979455279}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.049463034, y: -0.10653579}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.0989261, y: 1.0837066}
+  m_EdgeRadius: 0
 --- !u!1 &4006424986375991045
 GameObject:
   m_ObjectHideFlags: 0

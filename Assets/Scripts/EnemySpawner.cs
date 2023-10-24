@@ -11,11 +11,11 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float timeBeetweenSpawn = 3;
     private float spawnTimer;
     private int i = 0;
-    private ObjectPooler objectPooler;
+    
 
     private void Start()
     {
-        objectPooler = ObjectPooler.Instance;
+        
     }
 
     private void Update()
@@ -55,6 +55,6 @@ public class EnemySpawner : MonoBehaviour
 
         Vector3 randomPosition = new Vector2(posX, posY);
 
-        objectPooler.SpawnFromPool("Enemy", randomPosition, Quaternion.identity);
+        
     }
 }

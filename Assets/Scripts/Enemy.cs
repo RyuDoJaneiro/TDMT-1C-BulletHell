@@ -16,17 +16,14 @@ public class Enemy : Character
     [Header("Enemy Behaviour")]
     [SerializeField] private EnemyBehaviour behaviourType;
     [SerializeField] private float minDistance = 0.1f;
-    [SerializeField] private int attackValue = 1;
     [SerializeField] private float timeBetweenAttacks = 0.5f;
     private float timer;
     private Transform playerReference;
     private Vector3 playerPosition;
-    private BulletSpawner bulletSpawnerReference;
 
     private void Awake()
     {
         playerReference = GameObject.Find("Player").GetComponent<Transform>();
-        bulletSpawnerReference = GetComponent<BulletSpawner>();
         animator = GetComponent<CharacterAnimator>();
     }
 
@@ -72,21 +69,14 @@ public class Enemy : Character
                 case EnemyBehaviour.Chase:
                     if (timer > timeBetweenAttacks)
                     {
-                        playerReference.GetComponent<PlayerController>().TakeDamage(attackValue);
+                        playerReference.GetComponent<PlayerController>().TakeDamage(characterAttackValue);
                         timer = 0f;
                     }
                     break;
                 case EnemyBehaviour.Shoot:
                     if (timer > timeBetweenAttacks)
                     {
-                        if (!bulletSpawnerReference)
-                        {
-                            Debug.LogError($"{name}: Buller spawner is null!");
-                            break;
-                        }
-
-                        bulletSpawnerReference.ProjectileDirection = new Vector2(playerPosition.x, playerPosition.y);
-                        bulletSpawnerReference.ShootProjectile();
+                        StartCoroutine(Shoot(new Vector2(playerPosition.x, playerPosition.y)));
                         timer = 0f;
                     }
                     break;
@@ -106,7 +96,7 @@ public class Enemy : Character
         yield return new WaitForSeconds(0.5f);
 
         if (Vector2.Distance(transform.position, playerReference.position) < minDistance)
-            playerReference.GetComponent<PlayerController>().TakeDamage(attackValue);
+            playerReference.GetComponent<PlayerController>().TakeDamage(characterAttackValue);
     }
 
 }

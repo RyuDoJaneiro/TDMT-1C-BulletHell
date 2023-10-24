@@ -22,6 +22,8 @@ public class CharacterAnimator : MonoBehaviour
 
     [SerializeField] private List<Sprite> deathSprites = new List<Sprite>();
 
+    [SerializeField] private List<Sprite> attackSprites = new List<Sprite>();
+
     [SerializeField] FacingDirection defaultDirection = FacingDirection.Down;
 
     // Parameters    
@@ -46,6 +48,8 @@ public class CharacterAnimator : MonoBehaviour
 
     private SpriteAnimator deathAnim;
 
+    private SpriteAnimator attackAnim;
+
     private SpriteAnimator currentAnim;
     bool wasPreviouslyMove;
 
@@ -67,6 +71,8 @@ public class CharacterAnimator : MonoBehaviour
         idleLeftAnim = new SpriteAnimator(idleLeftSprites, spriteRenderer);
 
         deathAnim = new SpriteAnimator(deathSprites, spriteRenderer, 0.20f);
+
+        attackAnim = new SpriteAnimator(attackSprites, spriteRenderer);
 
         SetFacingDirection(defaultDirection);
 
