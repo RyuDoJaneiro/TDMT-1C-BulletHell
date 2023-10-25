@@ -10,17 +10,21 @@ public class PlayerController : Character
 {
     private Vector2 inputValue;
     private Vector2 mousePosition;
+    [SerializeField] private int eliminationsCount;
     [SerializeField] private ParticleSystem _particleSystem;
     [SerializeField] private Slider healthBar;
     private GameObject bow;
+    private Camera playerCamera;
 
     [SerializeField] private float timeBetweenShoots = 0.5f;
     private float shootTimer;
 
+    public int EliminationCount { get { return eliminationsCount; } set { eliminationsCount = value; } }
     private void Start()
     {
         shootTimer = timeBetweenShoots;
         bow = transform.Find("Bow").gameObject;
+        playerCamera = gameObject.transform.Find("PlayerCamera").GetComponent<Camera>();
     }
 
     private void Update()
@@ -53,7 +57,7 @@ public class PlayerController : Character
     public void OnLookAt(InputAction.CallbackContext context)
     {
         mousePosition = context.ReadValue<Vector2>();
-        Vector2 objectPosition = (Vector2) Camera.main.WorldToScreenPoint(transform.position);
+        Vector2 objectPosition = (Vector2) playerCamera.WorldToScreenPoint(transform.position);
         Vector2 rotation = mousePosition - objectPosition;
 
         bow.transform.rotation = Quaternion.Euler(new Vector3(0, 0, (Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg) - 45));
@@ -63,7 +67,7 @@ public class PlayerController : Character
     {
             if (shootTimer > timeBetweenShoots)
             {
-                Vector2 projectileDirection = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, 0f) - transform.position);
+                Vector2 projectileDirection = playerCamera.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, 0f) - transform.position);
                 StartCoroutine(Shoot(projectileDirection));
                 shootTimer = 0f;
             }

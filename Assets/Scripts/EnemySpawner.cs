@@ -5,22 +5,23 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    [SerializeField] private List<GameObject> enemyPrefabs = new List<GameObject>();
     [SerializeField] private Vector2 rectangleArea = new Vector2 (10f, 10f);
     [SerializeField] private float borderDistance = 1f;
-    [SerializeField] private int spawnDuration;
+    [SerializeField] private int spawnedEnemyAmount = 0;
     [SerializeField] private float timeBeetweenSpawn = 3;
     private float spawnTimer;
     private int i = 0;
-    
+    private PlayerController playerReference;
+
 
     private void Start()
     {
-        
+        playerReference = GameObject.Find("Player").GetComponent<PlayerController>();
     }
-
     private void Update()
     {
-        if (i > spawnDuration)
+        if (i < spawnedEnemyAmount)
         {
             spawnTimer += Time.deltaTime;
             if (spawnTimer > timeBeetweenSpawn)
@@ -28,13 +29,28 @@ public class EnemySpawner : MonoBehaviour
                 GenerateEnemy();
                 spawnTimer = 0f;
                 i++;
+                VerifyVictory();
             }
         }
         
     }
 
+    private void VerifyVictory()
+    {
+        if (playerReference == null)
+            return;
+
+        if (playerReference.EliminationCount >= spawnedEnemyAmount)
+        {
+            Debug.Log("EL JUGADOR GANO");
+        }
+
+    }
+
     private void GenerateEnemy()
     {
+        GameObject randomEnemy = enemyPrefabs[Random.Range(0, enemyPrefabs.Count)];
+
         bool InHorizontalBorder = Random.Range(0f, 1f) < 0.5f;
 
         float posX = 0f;
@@ -55,6 +71,6 @@ public class EnemySpawner : MonoBehaviour
 
         Vector3 randomPosition = new Vector2(posX, posY);
 
-        
+        Instantiate(randomEnemy, randomPosition, Quaternion.identity);
     }
 }

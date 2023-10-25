@@ -176,7 +176,7 @@ MonoBehaviour:
   solidObjectLayer:
     serializedVersion: 2
     m_Bits: 0
-  bulletPrefab: {fileID: 0}
+  bulletPrefab: {fileID: 553975628715543698, guid: 9f2451a48592dfa4c97c6ff1ade3029a, type: 3}
   behaviourType: 2
   minDistance: 5
   timeBetweenAttacks: 1

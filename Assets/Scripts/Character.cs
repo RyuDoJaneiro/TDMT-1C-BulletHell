@@ -22,7 +22,6 @@ public class Character : MonoBehaviour
     [Header("Character Actions")]
     public bool isMoving = false;
     public bool isDying;  
-    private Vector2 lastMovementDirection;
 
     [Header("Solid Objects Layer")]
     [SerializeField] private LayerMask solidObjectLayer;
@@ -52,7 +51,6 @@ public class Character : MonoBehaviour
         // Store the last movement direction the character was facing
         if (movementValue != Vector2.zero)
         {
-            lastMovementDirection = movementValue;
             animator.LastMoveX = movementValue.x;
             animator.LastMoveY = movementValue.y;
         }
@@ -66,6 +64,7 @@ public class Character : MonoBehaviour
 
     public IEnumerator Death()
     {
+        if (gameObject.layer == 7) GameObject.Find("Player").GetComponent<PlayerController>().EliminationCount++;
         isDying = true;
         Debug.Log($"{name} is dead");
         yield return new WaitForSeconds(1.5f);
@@ -93,11 +92,13 @@ public class Character : MonoBehaviour
 
     private bool IsWalkable(Vector2 nextPos)
     {
+
+
         Collider2D[] colliders = Physics2D.OverlapBoxAll(nextPos, colliderSize, solidObjectLayer);
 
         foreach (Collider2D collider in colliders)
         {
-            if (collider.gameObject != this.gameObject)
+            if (collider.gameObject != this.gameObject && gameObject.layer != 7)
             {
                 return false;
             }
