@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 7.9724874}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6389764447876772990}
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: -1898697561, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: -9059622955402759359}
   m_Layer: 7
   m_Name: ShooterEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -132,26 +132,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b38e44800397a17428d932b36f4edc76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasLeftAnimation: 0
+  hasLeftAnimation: 1
   walkUpSprites:
-  - {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  - {fileID: 1608779559, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
+  - {fileID: 554502850, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
+  - {fileID: 1996741146, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
+  - {fileID: -1508922696, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
   walkDownSprites:
-  - {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  - {fileID: -1898697561, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
+  - {fileID: 787150025, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
+  - {fileID: 1605655215, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
+  - {fileID: 1263605048, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
   walkRightSprites:
-  - {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  - {fileID: -1080504204, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
+  - {fileID: -1725176865, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
+  - {fileID: 953516854, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
+  - {fileID: -1457588265, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
   walkLeftSprites:
-  - {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  - {fileID: -1877613343, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
+  - {fileID: 1459391898, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
+  - {fileID: 921640107, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
+  - {fileID: -1392189747, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
   idleUpSprites:
-  - {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  - {fileID: 1608779559, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
+  - {fileID: 554502850, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
+  - {fileID: 1996741146, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
+  - {fileID: -1508922696, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
   idleDownSprites:
-  - {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  - {fileID: -1898697561, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
+  - {fileID: 787150025, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
+  - {fileID: 1263605048, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
+  - {fileID: 1605655215, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
   idleRightSprites:
-  - {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  - {fileID: -1080504204, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
+  - {fileID: -1725176865, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
+  - {fileID: 953516854, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
+  - {fileID: -1457588265, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
   idleLeftSprites:
-  - {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  - {fileID: -1877613343, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
+  - {fileID: 1459391898, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
+  - {fileID: 921640107, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
+  - {fileID: -1392189747, guid: 865fc7b91845ed64581522acfbbc5160, type: 3}
   deathSprites:
-  - {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  attackSprites: []
+  - {fileID: 547382662, guid: 924dba2b6fbb8ef458904e1c19ce9798, type: 3}
+  - {fileID: 818494252, guid: 924dba2b6fbb8ef458904e1c19ce9798, type: 3}
+  - {fileID: -1441252649, guid: 924dba2b6fbb8ef458904e1c19ce9798, type: 3}
+  - {fileID: 1273267871, guid: 924dba2b6fbb8ef458904e1c19ce9798, type: 3}
   defaultDirection: 1
 --- !u!114 &1471436162459283219
 MonoBehaviour:
@@ -170,7 +196,7 @@ MonoBehaviour:
   isEnemyOf: 3
   characterHealth: 100
   characterSpeed: 5
-  characterAttackValue: 1
+  characterAttackValue: 5
   isMoving: 0
   isDying: 0
   solidObjectLayer:

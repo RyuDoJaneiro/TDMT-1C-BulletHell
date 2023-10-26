@@ -76,7 +76,7 @@ public class Enemy : Character
                 case EnemyBehaviour.Shoot:
                     if (timer > timeBetweenAttacks)
                     {
-                        StartCoroutine(Shoot(new Vector2(playerPosition.x, playerPosition.y)));
+                        StartCoroutine(Shoot(new Vector2(playerPosition.x - transform.position.x, playerPosition.y - transform.position.y)));
                         timer = 0f;
                     }
                     break;

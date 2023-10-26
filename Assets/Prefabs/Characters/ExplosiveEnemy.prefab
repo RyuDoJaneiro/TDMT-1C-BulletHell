@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -328126343108221079}
   m_Layer: 7
   m_Name: ExplosiveEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52,7 +52,7 @@ MonoBehaviour:
   isEnemyOf: 3
   characterHealth: 100
   characterSpeed: 5
-  characterAttackValue: 1
+  characterAttackValue: 15
   isMoving: 0
   isDying: 0
   solidObjectLayer:
@@ -104,7 +104,6 @@ MonoBehaviour:
   - {fileID: 818494252, guid: 924dba2b6fbb8ef458904e1c19ce9798, type: 3}
   - {fileID: -1441252649, guid: 924dba2b6fbb8ef458904e1c19ce9798, type: 3}
   - {fileID: 1273267871, guid: 924dba2b6fbb8ef458904e1c19ce9798, type: 3}
-  attackSprites: []
   defaultDirection: 1
 --- !u!61 &-328126343108221079
 BoxCollider2D:

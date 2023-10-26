@@ -6,22 +6,27 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private List<GameObject> enemyPrefabs = new List<GameObject>();
-    [SerializeField] private Vector2 rectangleArea = new Vector2 (10f, 10f);
+    [SerializeField] private Vector2 rectangleArea = new Vector2(10f, 10f);
     [SerializeField] private float borderDistance = 1f;
-    [SerializeField] private int spawnedEnemyAmount = 0;
+    [SerializeField] private int spawnEnemyAmount = 3;
     [SerializeField] private float timeBeetweenSpawn = 3;
     private float spawnTimer;
-    private int i = 0;
+    public int i = 0;
+    private GameManager gameManager;
     private PlayerController playerReference;
 
+
+    public int SpawnEnemyAmount { get { return spawnEnemyAmount; } set { spawnEnemyAmount = value; } }
 
     private void Start()
     {
         playerReference = GameObject.Find("Player").GetComponent<PlayerController>();
+        gameManager = GetComponent<GameManager>();
     }
+
     private void Update()
     {
-        if (i < spawnedEnemyAmount)
+        if (i < spawnEnemyAmount)
         {
             spawnTimer += Time.deltaTime;
             if (spawnTimer > timeBeetweenSpawn)
@@ -29,22 +34,12 @@ public class EnemySpawner : MonoBehaviour
                 GenerateEnemy();
                 spawnTimer = 0f;
                 i++;
-                VerifyVictory();
             }
+        } else
+        {
+            gameManager.VerifyVictory();
         }
         
-    }
-
-    private void VerifyVictory()
-    {
-        if (playerReference == null)
-            return;
-
-        if (playerReference.EliminationCount >= spawnedEnemyAmount)
-        {
-            Debug.Log("EL JUGADOR GANO");
-        }
-
     }
 
     private void GenerateEnemy()

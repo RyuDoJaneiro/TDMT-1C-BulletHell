@@ -67,7 +67,14 @@ public class PlayerController : Character
     {
             if (shootTimer > timeBetweenShoots)
             {
-                Vector2 projectileDirection = playerCamera.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, 0f) - transform.position);
+                Vector2 mousePosition = new Vector2(Mouse.current.position.x.ReadValue(), Mouse.current.position.y.ReadValue());
+
+                Vector3 objectPosition = transform.position;
+                Vector3 cameraPosition = playerCamera.transform.position;
+
+                mousePosition = playerCamera.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, cameraPosition.z));
+
+                Vector2 projectileDirection = mousePosition - new Vector2(objectPosition.x, objectPosition.y);
                 StartCoroutine(Shoot(projectileDirection));
                 shootTimer = 0f;
             }

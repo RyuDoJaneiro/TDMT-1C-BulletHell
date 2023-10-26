@@ -29,6 +29,8 @@ public class Character : MonoBehaviour
     [Header("Bullet prefab")]
     [SerializeField] private GameObject bulletPrefab;
  
+    public int CharacterHealth { get { return characterHealth; } set {  characterHealth = value; } }
+
     private void Awake()
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -65,6 +67,16 @@ public class Character : MonoBehaviour
     public IEnumerator Death()
     {
         if (gameObject.layer == 7) GameObject.Find("Player").GetComponent<PlayerController>().EliminationCount++;
+        if (gameObject.layer == 3)
+        {
+            GameObject.Find("GameManager").GetComponent<GameManager>().PlayerDefeat();
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+            foreach (GameObject enemy in enemies)
+            {
+                Destroy(enemy);
+            }
+        }
         isDying = true;
         Debug.Log($"{name} is dead");
         yield return new WaitForSeconds(1.5f);
@@ -92,15 +104,16 @@ public class Character : MonoBehaviour
 
     private bool IsWalkable(Vector2 nextPos)
     {
-
-
         Collider2D[] colliders = Physics2D.OverlapBoxAll(nextPos, colliderSize, solidObjectLayer);
 
         foreach (Collider2D collider in colliders)
         {
-            if (collider.gameObject != this.gameObject && gameObject.layer != 7)
+            if (!collider.isTrigger)
             {
-                return false;
+                if (collider.gameObject != this.gameObject && gameObject.layer != 7)
+                {
+                    return false;
+                }
             }
         }
 

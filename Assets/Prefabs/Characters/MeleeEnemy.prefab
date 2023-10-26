@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 7467039474634824465}
   m_Layer: 7
   m_Name: MeleeEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -215,7 +215,6 @@ MonoBehaviour:
   - {fileID: 1932736572, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
   - {fileID: 698065201, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
   - {fileID: -1682780476, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
-  attackSprites: []
   defaultDirection: 1
 --- !u!114 &8931975093763143108
 MonoBehaviour:
@@ -234,7 +233,7 @@ MonoBehaviour:
   isEnemyOf: 3
   characterHealth: 100
   characterSpeed: 5
-  characterAttackValue: 1
+  characterAttackValue: 10
   isMoving: 0
   isDying: 0
   solidObjectLayer:
