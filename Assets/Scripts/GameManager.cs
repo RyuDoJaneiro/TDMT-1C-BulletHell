@@ -16,24 +16,27 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject mainCamera;
     [SerializeField] private GameObject creditsObject;
     [SerializeField] private GameObject inGameButton;
+    [SerializeField] private GameObject chestGameObject;
+    [SerializeField] private bool isChestOpen = false;
+
+    public bool IsChestOpen { get { return isChestOpen; } set { isChestOpen = value; } }
     private void Start()
     {
         enemySpawner = GetComponent<EnemySpawner>();
     }
 
-    public void StartMatch()
+    public void StartGame()
     {
         menuObject.SetActive(false);
         Camera.main.gameObject.SetActive(false);
-        enemySpawner.SpawnEnemyAmount = 3;
-        StartCoroutine(SetupMatch());
+        StartCoroutine(SetupGame());
     }
 
-    private IEnumerator SetupMatch()
+    private IEnumerator SetupGame()
     {
         healthBar.SetActive(true);
         playerReference.gameObject.SetActive(true);
-        playerReference.CharacterHealth = 100;
+        playerReference.CharacterCurrentHealth = 100;
         playerReference.isDying = false;
         readyText.gameObject.SetActive(true);
         readyText.text = "¿Listo?";
@@ -43,12 +46,12 @@ public class GameManager : MonoBehaviour
         inGameButton.SetActive(true);
         readyText.gameObject.SetActive(false);
 
-        enemySpawner.enabled = true;
-        enemySpawner.i = 0;
+        StartCoroutine(StartHorde());
     }
 
     public void VerifyVictory()
     {
+
         if (playerReference == null)
         {
             Debug.LogError($"{name}: Player reference is null!");
@@ -58,7 +61,9 @@ public class GameManager : MonoBehaviour
         if (playerReference.EliminationCount >= enemySpawner.SpawnEnemyAmount)
         {
             Debug.Log($"{name}: El jugador ganó una ronda");
-            StartCoroutine(NextHorde());
+            chestGameObject.SetActive(true);
+            readyText.gameObject.SetActive(true);
+            readyText.text = "¡Oleada superada!";
         }
     }
 
@@ -70,20 +75,17 @@ public class GameManager : MonoBehaviour
         defeatObject.SetActive(true);
     }
 
-    private IEnumerator NextHorde()
+    private IEnumerator StartHorde()
     {
         hordeNumber++;
-        playerReference.CharacterHealth = 100;
-        enemySpawner.enabled = false;
+        playerReference.CharacterCurrentHealth = playerReference.CharacterMaxHealth;
         readyText.gameObject.SetActive(true);
-        readyText.text = "¡Ganaste!";
+        readyText.text = $"Oleada N° {hordeNumber}";
         yield return new WaitForSeconds(1.5f);
-        readyText.text = "Siguiente ronda";
-        yield return new WaitForSeconds(1f);
+        readyText.text = "¡Ya!";
         readyText.gameObject.SetActive(false);
-        enemySpawner.enabled = true;
-        enemySpawner.i = 0;
         enemySpawner.SpawnEnemyAmount += 3;
+        StartCoroutine(enemySpawner.SpawnEnemies());
     }
 
     public void MatchToMenu()

@@ -8,6 +8,7 @@ public class Character : MonoBehaviour
 {
     protected CharacterAnimator animator;
     protected SpriteRenderer spriteRenderer;
+    protected GameManager gameManager;
     [SerializeField] private Vector2 colliderSize = new(1f, 1f);
 
     [Header("Character Info")]
@@ -15,7 +16,8 @@ public class Character : MonoBehaviour
     [SerializeField] private int isEnemyOf;
 
     [Header("Character Stats")]
-    [SerializeField] protected int characterHealth = 100;
+    [SerializeField] private int characterMaxHealth = 100;
+    [SerializeField] protected int characterCurrentHealth = 100;
     [SerializeField] private float characterSpeed = 8;
     [SerializeField] protected int characterAttackValue = 1;
 
@@ -29,7 +31,14 @@ public class Character : MonoBehaviour
     [Header("Bullet prefab")]
     [SerializeField] private GameObject bulletPrefab;
  
-    public int CharacterHealth { get { return characterHealth; } set {  characterHealth = value; } }
+    public int CharacterCurrentHealth { get { return characterCurrentHealth; } set {  characterCurrentHealth = value; } }
+
+    public int CharacterMaxHealth { get => characterMaxHealth; set => characterMaxHealth = value; }
+
+    private void OnEnable()
+    {
+        gameManager = FindAnyObjectByType<GameManager>();
+    }
 
     private void Awake()
     {
@@ -66,7 +75,11 @@ public class Character : MonoBehaviour
 
     public IEnumerator Death()
     {
-        if (gameObject.layer == 7) GameObject.Find("Player").GetComponent<PlayerController>().EliminationCount++;
+        if (gameObject.layer == 7)
+        {
+            GameObject.Find("Player").GetComponent<PlayerController>().EliminationCount++;
+            gameManager.VerifyVictory();
+        }
         if (gameObject.layer == 3)
         {
             GameObject.Find("GameManager").GetComponent<GameManager>().PlayerDefeat();
@@ -98,8 +111,8 @@ public class Character : MonoBehaviour
 
     public void TakeDamage(int damageAmount)
     {
-        characterHealth -= damageAmount;
-        if (characterHealth <= 0) StartCoroutine(Death());
+        characterCurrentHealth -= damageAmount;
+        if (characterCurrentHealth <= 0) StartCoroutine(Death());
     }
 
     private bool IsWalkable(Vector2 nextPos)

@@ -34,7 +34,7 @@ public class PlayerController : Character
 
     private void FixedUpdate()
     {
-        healthBar.value = characterHealth;
+        healthBar.value = characterCurrentHealth;
 
         MoveCharacter(inputValue);
         if (inputValue == Vector2.zero)
@@ -78,5 +78,19 @@ public class PlayerController : Character
                 StartCoroutine(Shoot(projectileDirection));
                 shootTimer = 0f;
             }
+    }
+
+    public void Interact()
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 1f);
+
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.name == "Chest" && gameManager.IsChestOpen == false)
+            {
+                CharacterMaxHealth += 10;
+                gameManager.IsChestOpen = true;
+            }
+        }
     }
 }

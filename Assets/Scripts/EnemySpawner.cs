@@ -10,37 +10,8 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float borderDistance = 1f;
     [SerializeField] private int spawnEnemyAmount = 3;
     [SerializeField] private float timeBeetweenSpawn = 3;
-    private float spawnTimer;
-    public int i = 0;
-    private GameManager gameManager;
-    private PlayerController playerReference;
-
 
     public int SpawnEnemyAmount { get { return spawnEnemyAmount; } set { spawnEnemyAmount = value; } }
-
-    private void Start()
-    {
-        playerReference = GameObject.Find("Player").GetComponent<PlayerController>();
-        gameManager = GetComponent<GameManager>();
-    }
-
-    private void Update()
-    {
-        if (i < spawnEnemyAmount)
-        {
-            spawnTimer += Time.deltaTime;
-            if (spawnTimer > timeBeetweenSpawn)
-            {
-                GenerateEnemy();
-                spawnTimer = 0f;
-                i++;
-            }
-        } else
-        {
-            gameManager.VerifyVictory();
-        }
-        
-    }
 
     private void GenerateEnemy()
     {
@@ -67,5 +38,15 @@ public class EnemySpawner : MonoBehaviour
         Vector3 randomPosition = new Vector2(posX, posY);
 
         Instantiate(randomEnemy, randomPosition, Quaternion.identity);
+    }
+
+    public IEnumerator SpawnEnemies()
+    {
+        for (int i = 0; i < spawnEnemyAmount; i++)
+        {
+            yield return new WaitForSeconds(timeBeetweenSpawn);
+            GenerateEnemy();
+        }
+        yield return null;
     }
 }
