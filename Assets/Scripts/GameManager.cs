@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,37 +17,45 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject mainCamera;
     [SerializeField] private GameObject creditsObject;
     [SerializeField] private GameObject inGameButton;
-    [SerializeField] private GameObject chestGameObject;
-    [SerializeField] private bool isChestOpen = false;
+    [SerializeField] private GameObject mapVariationsContainer;
+    [SerializeField] private GameObject loadingPanel;
+    [SerializeField] private GameObject tutorial;
+    [SerializeField] private GameObject portal;
+    [SerializeField] private GameObject slimeBoss;
+    [SerializeField] private Slider slimeHealthBar;
+    [SerializeField] private GameObject slimeHealthObject;
+    [SerializeField] private GameObject victoryPanel;
+    private List<GameObject> mapVariations = new List<GameObject>();
 
-    public bool IsChestOpen { get { return isChestOpen; } set { isChestOpen = value; } }
     private void Start()
     {
+        for (int i = 0; i < mapVariationsContainer.transform.childCount; i++)
+        {
+            mapVariations.Add(mapVariationsContainer.transform.GetChild(i).transform.gameObject);
+        }
         enemySpawner = GetComponent<EnemySpawner>();
+    }
+
+    private void Update()
+    {
+        if (slimeBoss.activeInHierarchy == true)
+            slimeHealthBar.value = slimeBoss.GetComponent<Enemy>().CharacterCurrentHealth;
     }
 
     public void StartGame()
     {
+        hordeNumber = 0;
+        playerReference.transform.position = Vector2.zero;
         menuObject.SetActive(false);
         Camera.main.gameObject.SetActive(false);
-        StartCoroutine(SetupGame());
-    }
-
-    private IEnumerator SetupGame()
-    {
+        tutorial.SetActive(true);
         healthBar.SetActive(true);
         playerReference.gameObject.SetActive(true);
         playerReference.CharacterCurrentHealth = 100;
         playerReference.isDying = false;
-        readyText.gameObject.SetActive(true);
-        readyText.text = "¿Listo?";
-        yield return new WaitForSeconds(1.5f);
-        readyText.text = "¡YA!";
-        yield return new WaitForSeconds(0.5f);
         inGameButton.SetActive(true);
         readyText.gameObject.SetActive(false);
-
-        StartCoroutine(StartHorde());
+        portal.SetActive(true);
     }
 
     public void VerifyVictory()
@@ -61,9 +70,13 @@ public class GameManager : MonoBehaviour
         if (playerReference.EliminationCount >= enemySpawner.SpawnEnemyAmount)
         {
             Debug.Log($"{name}: El jugador ganó una ronda");
-            chestGameObject.SetActive(true);
             readyText.gameObject.SetActive(true);
             readyText.text = "¡Oleada superada!";
+            portal.SetActive(true);
+        }
+        else if (slimeBoss.GetComponent<Enemy>().isDying == true)
+        {
+            victoryPanel.SetActive(true);
         }
     }
 
@@ -79,13 +92,27 @@ public class GameManager : MonoBehaviour
     {
         hordeNumber++;
         playerReference.CharacterCurrentHealth = playerReference.CharacterMaxHealth;
-        readyText.gameObject.SetActive(true);
-        readyText.text = $"Oleada N° {hordeNumber}";
-        yield return new WaitForSeconds(1.5f);
-        readyText.text = "¡Ya!";
-        readyText.gameObject.SetActive(false);
-        enemySpawner.SpawnEnemyAmount += 3;
-        StartCoroutine(enemySpawner.SpawnEnemies());
+        playerReference.EliminationCount = 0;
+
+        if (hordeNumber >= 3)
+        {
+            slimeBoss.SetActive(true);
+            slimeHealthObject.SetActive(true);
+            readyText.gameObject.SetActive(true);
+            readyText.text = "Jefe Final";
+            yield return new WaitForSeconds(1.5f);
+            readyText.gameObject.SetActive(false);
+        }
+        else
+        {
+            readyText.gameObject.SetActive(true);
+            readyText.text = $"Nivel N° {hordeNumber}";
+            yield return new WaitForSeconds(1.5f);
+            readyText.gameObject.SetActive(false);
+            enemySpawner.SpawnEnemyAmount += 3;
+            StartCoroutine(enemySpawner.SpawnEnemies());
+        }
+        
     }
 
     public void MatchToMenu()
@@ -110,6 +137,17 @@ public class GameManager : MonoBehaviour
     {
         menuObject.SetActive(true);
         defeatObject.SetActive(false);
+        slimeHealthObject.SetActive(false);
+    }
+
+    public void VictoryToMenu()
+    {
+        healthBar.SetActive(false);
+        playerReference.gameObject.SetActive(false);
+        mainCamera.SetActive(true);
+        menuObject.SetActive(true);
+        victoryPanel.SetActive(false);
+        slimeHealthObject.SetActive(false);
     }
 
     public void CreditsToMenu()
@@ -127,5 +165,29 @@ public class GameManager : MonoBehaviour
     public void CloseGame()
     {
         Application.Quit();
+    }
+
+    public IEnumerator NextLevel()
+    {
+        tutorial.SetActive(false);
+        playerReference.CharacterSpeed = 0;
+
+        loadingPanel.SetActive(true);
+
+        playerReference.GetComponent<Transform>().position = Vector3.zero;
+        foreach (GameObject mapVariation in mapVariations)
+        {
+            mapVariation.SetActive(false);
+        }
+        mapVariations[UnityEngine.Random.Range(0, mapVariations.Count)].SetActive(true);
+
+        yield return new WaitForSeconds(2f);
+        playerReference.CharacterSpeed = 8;
+
+        loadingPanel.SetActive(false);
+
+        StartCoroutine(StartHorde());
+
+        yield return null;
     }
 }

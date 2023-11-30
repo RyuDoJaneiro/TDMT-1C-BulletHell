@@ -66,7 +66,7 @@ public class CharacterAnimator : MonoBehaviour
         idleRightAnim = new SpriteAnimator(idleRightSprites, spriteRenderer);
         idleLeftAnim = new SpriteAnimator(idleLeftSprites, spriteRenderer);
 
-        deathAnim = new SpriteAnimator(deathSprites, spriteRenderer, 0.20f);
+        deathAnim = new SpriteAnimator(deathSprites, spriteRenderer, 0.20f, false);
 
         SetFacingDirection(defaultDirection);
 

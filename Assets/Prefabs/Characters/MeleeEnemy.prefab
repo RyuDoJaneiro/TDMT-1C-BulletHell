@@ -190,30 +190,66 @@ MonoBehaviour:
   - {fileID: 1048875789, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
   - {fileID: 233866125, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
   idleUpSprites:
-  - {fileID: -1258271681, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
-  - {fileID: 157567097, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
-  - {fileID: -1392104580, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
-  - {fileID: 1492036077, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: -1741993064, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: -1748612872, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: 659122691, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: 1663118627, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: -461332189, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: -44077766, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: -1633199332, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: -1960240316, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: 215210282, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: -620907986, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: 1627742753, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: 1048875789, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: 233866125, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
   idleDownSprites:
-  - {fileID: -1258271681, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
-  - {fileID: 157567097, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
-  - {fileID: -1392104580, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
-  - {fileID: 1492036077, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: -1741993064, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: -1748612872, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: 659122691, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: 1663118627, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: -461332189, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: -44077766, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: -1633199332, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: -1960240316, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: 215210282, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: -620907986, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: 1627742753, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: 1048875789, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: 233866125, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
   idleRightSprites:
-  - {fileID: -1258271681, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
-  - {fileID: 157567097, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
-  - {fileID: -1392104580, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
-  - {fileID: 1492036077, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: -1741993064, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: -1748612872, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: 659122691, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: 1663118627, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: -461332189, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: -44077766, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: -1633199332, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: -1960240316, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: 215210282, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: -620907986, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: 1627742753, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: 1048875789, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: 233866125, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
   idleLeftSprites:
-  - {fileID: -1258271681, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
-  - {fileID: 157567097, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
-  - {fileID: -1392104580, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
-  - {fileID: 1492036077, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: -1741993064, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: -1748612872, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: 659122691, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: 1663118627, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: -461332189, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: -44077766, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: -1633199332, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: -1960240316, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: 215210282, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: -620907986, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: 1627742753, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: 1048875789, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: 233866125, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
   deathSprites:
-  - {fileID: -1374624788, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
-  - {fileID: 880420482, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
   - {fileID: 1932736572, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: -1374624788, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
   - {fileID: 698065201, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
+  - {fileID: 880420482, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
   - {fileID: -1682780476, guid: 6ca06d98952f227468f7dea3a8ed3ad7, type: 3}
   defaultDirection: 1
 --- !u!114 &8931975093763143108
@@ -231,7 +267,8 @@ MonoBehaviour:
   colliderSize: {x: 1, y: 1}
   characterName: Slime
   isEnemyOf: 3
-  characterHealth: 100
+  characterMaxHealth: 100
+  characterCurrentHealth: 100
   characterSpeed: 5
   characterAttackValue: 10
   isMoving: 0

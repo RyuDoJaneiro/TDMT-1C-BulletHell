@@ -10,7 +10,8 @@ public class Enemy : Character
     {
         Explode,
         Chase,
-        Shoot
+        Shoot,
+        Boss
     }
 
     [Header("Enemy Behaviour")]
@@ -77,6 +78,24 @@ public class Enemy : Character
                     if (timer > timeBetweenAttacks)
                     {
                         StartCoroutine(Shoot(new Vector2(playerPosition.x - transform.position.x, playerPosition.y - transform.position.y)));
+                        timer = 0f;
+                    }
+                    break;
+                case EnemyBehaviour.Boss:
+                    if (timer > timeBetweenAttacks)
+                    {
+                        Vector2[] directions = 
+                        {
+                            Vector2.up, Vector2.down, Vector2.left, Vector2.right,
+                            new Vector2(1, 1).normalized, new Vector2(1, -1).normalized,
+                            new Vector2(-1, 1).normalized, new Vector2(-1, -1).normalized
+                        };
+
+                        foreach (Vector2 direction in directions)
+                        {
+                            StartCoroutine(Shoot(direction));
+                        }
+
                         timer = 0f;
                     }
                     break;

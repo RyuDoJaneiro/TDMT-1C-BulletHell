@@ -178,6 +178,7 @@ MonoBehaviour:
   - {fileID: 818494252, guid: 924dba2b6fbb8ef458904e1c19ce9798, type: 3}
   - {fileID: -1441252649, guid: 924dba2b6fbb8ef458904e1c19ce9798, type: 3}
   - {fileID: 1273267871, guid: 924dba2b6fbb8ef458904e1c19ce9798, type: 3}
+  - {fileID: 0}
   defaultDirection: 1
 --- !u!114 &1471436162459283219
 MonoBehaviour:
@@ -194,7 +195,8 @@ MonoBehaviour:
   colliderSize: {x: 1, y: 1}
   characterName: 
   isEnemyOf: 3
-  characterHealth: 100
+  characterMaxHealth: 100
+  characterCurrentHealth: 100
   characterSpeed: 5
   characterAttackValue: 5
   isMoving: 0

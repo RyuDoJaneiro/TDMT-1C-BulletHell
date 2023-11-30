@@ -23,7 +23,8 @@ public class Character : MonoBehaviour
 
     [Header("Character Actions")]
     public bool isMoving = false;
-    public bool isDying;  
+    public bool isDying;
+    public bool isImmortal = false;
 
     [Header("Solid Objects Layer")]
     [SerializeField] private LayerMask solidObjectLayer;
@@ -32,8 +33,9 @@ public class Character : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab;
  
     public int CharacterCurrentHealth { get { return characterCurrentHealth; } set {  characterCurrentHealth = value; } }
-
     public int CharacterMaxHealth { get => characterMaxHealth; set => characterMaxHealth = value; }
+
+    public float CharacterSpeed { get => characterSpeed; set => characterSpeed = value; }
 
     private void OnEnable()
     {
@@ -75,6 +77,7 @@ public class Character : MonoBehaviour
 
     public IEnumerator Death()
     {
+        isDying = true;
         if (gameObject.layer == 7)
         {
             GameObject.Find("Player").GetComponent<PlayerController>().EliminationCount++;
@@ -87,10 +90,12 @@ public class Character : MonoBehaviour
 
             foreach (GameObject enemy in enemies)
             {
-                Destroy(enemy);
+                if (enemy.name == "SlimeBoss")
+                    enemy.SetActive(false);
+                else
+                    Destroy(enemy);
             }
         }
-        isDying = true;
         Debug.Log($"{name} is dead");
         yield return new WaitForSeconds(1.5f);
         gameObject.SetActive(false);
@@ -111,6 +116,9 @@ public class Character : MonoBehaviour
 
     public void TakeDamage(int damageAmount)
     {
+        if (isImmortal == true)
+            return;
+
         characterCurrentHealth -= damageAmount;
         if (characterCurrentHealth <= 0) StartCoroutine(Death());
     }

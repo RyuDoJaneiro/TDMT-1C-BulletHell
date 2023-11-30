@@ -7,15 +7,17 @@ public class SpriteAnimator
     private SpriteRenderer spriteRenderer;
     private List<Sprite> frames;
     private float frameRate;
+    private bool loop;
 
     private int currentFrame;
     private float timer;
 
-    public SpriteAnimator(List<Sprite> frames, SpriteRenderer spriteRenderer, float frameRate = 0.16f)
+    public SpriteAnimator(List<Sprite> frames, SpriteRenderer spriteRenderer, float frameRate = 0.16f, bool loop = true)
     {
         this.frames = frames;
         this.spriteRenderer = spriteRenderer;
         this.frameRate = frameRate;
+        this.loop = loop;
     }
 
     public void Start()
@@ -27,6 +29,11 @@ public class SpriteAnimator
 
     public void HandleUpdate()
     {
+        if (!loop && currentFrame == frames.Count - 1)
+        {
+            return;
+        }
+
         timer += Time.deltaTime;
         if (timer > frameRate)
         {

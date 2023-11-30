@@ -13,6 +13,7 @@ public class PlayerController : Character
     [SerializeField] private int eliminationsCount;
     [SerializeField] private ParticleSystem _particleSystem;
     [SerializeField] private Slider healthBar;
+    [SerializeField] private GameObject portalGameObject;
     private GameObject bow;
     private Camera playerCamera;
 
@@ -86,11 +87,37 @@ public class PlayerController : Character
 
         foreach (Collider2D collider in colliders)
         {
-            if (collider.name == "Chest" && gameManager.IsChestOpen == false)
+            if (collider.name == "Portal")
             {
-                CharacterMaxHealth += 10;
-                gameManager.IsChestOpen = true;
+                portalGameObject.SetActive(false);
+                StartCoroutine(gameManager.NextLevel());
             }
+        }
+    }
+
+    public void ToggleImmortality()
+    {
+        if (isImmortal == false)
+            isImmortal = true;
+        else
+            isImmortal = false;
+    }
+
+    public void ChangeVelocity()
+    {
+        if (CharacterSpeed == 8)
+            CharacterSpeed *= 2;
+        else
+            CharacterSpeed = 8;
+    }
+
+    public void DamageEnemies()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        foreach (GameObject enemy in enemies)
+        {
+            enemy.GetComponent<Enemy>().TakeDamage(50);
         }
     }
 }
