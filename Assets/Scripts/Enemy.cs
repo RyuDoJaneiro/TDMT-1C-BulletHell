@@ -84,21 +84,30 @@ public class Enemy : Character
                 case EnemyBehaviour.Boss:
                     if (timer > timeBetweenAttacks)
                     {
-                        Vector2[] directions = 
-                        {
-                            Vector2.up, Vector2.down, Vector2.left, Vector2.right,
-                            new Vector2(1, 1).normalized, new Vector2(1, -1).normalized,
-                            new Vector2(-1, 1).normalized, new Vector2(-1, -1).normalized
-                        };
+                        int attackType = Random.Range(0, 2);
 
-                        foreach (Vector2 direction in directions)
+                        if (attackType == 0)
                         {
-                            StartCoroutine(Shoot(direction));
+                            Vector2[] directions1 = { Vector2.up, Vector2.down, Vector2.left, Vector2.right };
+                            foreach (Vector2 direction in directions1)
+                            {
+                                StartCoroutine(Shoot(direction));
+                            }
+                        }
+                        else
+                        {
+                            Vector2[] directions2 = { new Vector2(1, 1).normalized, new Vector2(1, -1).normalized,
+                                       new Vector2(-1, 1).normalized, new Vector2(-1, -1).normalized };
+                            foreach (Vector2 direction in directions2)
+                            {
+                                StartCoroutine(Shoot(direction));
+                            }
                         }
 
                         timer = 0f;
                     }
                     break;
+
                 default:
                     Debug.LogError("This enemy has not behaviour");
                     break;

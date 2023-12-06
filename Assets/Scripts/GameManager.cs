@@ -44,15 +44,14 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        hordeNumber = 0;
-        playerReference.transform.position = Vector2.zero;
+        ResetGame();
+
+        enemySpawner.enabled = false;
         menuObject.SetActive(false);
         Camera.main.gameObject.SetActive(false);
         tutorial.SetActive(true);
         healthBar.SetActive(true);
         playerReference.gameObject.SetActive(true);
-        playerReference.CharacterCurrentHealth = 100;
-        playerReference.isDying = false;
         inGameButton.SetActive(true);
         readyText.gameObject.SetActive(false);
         portal.SetActive(true);
@@ -77,13 +76,16 @@ public class GameManager : MonoBehaviour
         else if (slimeBoss.GetComponent<Enemy>().isDying == true)
         {
             victoryPanel.SetActive(true);
+            mainCamera.SetActive(true);
+            ResetGame();
         }
     }
 
     public void PlayerDefeat()
     {
+        ResetGame();
+
         enemySpawner.enabled = false;
-        healthBar.SetActive(false);
         mainCamera.SetActive(true);
         defeatObject.SetActive(true);
     }
@@ -91,12 +93,14 @@ public class GameManager : MonoBehaviour
     private IEnumerator StartHorde()
     {
         hordeNumber++;
+        enemySpawner.enabled = true;
         playerReference.CharacterCurrentHealth = playerReference.CharacterMaxHealth;
         playerReference.EliminationCount = 0;
 
         if (hordeNumber >= 3)
         {
             slimeBoss.SetActive(true);
+            slimeBoss.GetComponent<Enemy>().CharacterCurrentHealth = slimeBoss.GetComponent<Enemy>().CharacterMaxHealth;
             slimeHealthObject.SetActive(true);
             readyText.gameObject.SetActive(true);
             readyText.text = "Jefe Final";
@@ -138,6 +142,8 @@ public class GameManager : MonoBehaviour
         menuObject.SetActive(true);
         defeatObject.SetActive(false);
         slimeHealthObject.SetActive(false);
+
+        ResetGame();
     }
 
     public void VictoryToMenu()
@@ -148,6 +154,8 @@ public class GameManager : MonoBehaviour
         menuObject.SetActive(true);
         victoryPanel.SetActive(false);
         slimeHealthObject.SetActive(false);
+
+        ResetGame();
     }
 
     public void CreditsToMenu()
@@ -189,5 +197,30 @@ public class GameManager : MonoBehaviour
         StartCoroutine(StartHorde());
 
         yield return null;
+    }
+
+    public void ResetGame()
+    {
+        hordeNumber = 0;
+        enemySpawner.SpawnEnemyAmount = 0;
+        playerReference.gameObject.SetActive(false);
+        slimeHealthObject.SetActive(false);
+        healthBar.SetActive(false);
+        playerReference.transform.position = Vector2.zero;
+        playerReference.CharacterCurrentHealth = 100;
+        playerReference.isDying = false;
+        slimeBoss.GetComponent<Enemy>().isDying = false;
+        playerReference.EliminationCount = 0;
+        portal.SetActive(false);
+
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        foreach (GameObject enemy in enemies)
+        {
+            if (enemy.name == "SlimeBoss")
+                enemy.SetActive(false);
+            else
+                Destroy(enemy);
+        }
     }
 }

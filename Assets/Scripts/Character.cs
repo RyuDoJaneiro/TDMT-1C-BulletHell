@@ -86,15 +86,6 @@ public class Character : MonoBehaviour
         if (gameObject.layer == 3)
         {
             GameObject.Find("GameManager").GetComponent<GameManager>().PlayerDefeat();
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-            foreach (GameObject enemy in enemies)
-            {
-                if (enemy.name == "SlimeBoss")
-                    enemy.SetActive(false);
-                else
-                    Destroy(enemy);
-            }
         }
         Debug.Log($"{name} is dead");
         yield return new WaitForSeconds(1.5f);
