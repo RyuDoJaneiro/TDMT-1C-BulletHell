@@ -80,7 +80,7 @@ public class Character : MonoBehaviour
         isDying = true;
         if (gameObject.layer == 7)
         {
-            GameObject.Find("Player").GetComponent<PlayerController>().EliminationCount++;
+            GameObject.Find("Player").GetComponent<PlayerController>().EliminationCount += 1;
             gameManager.VerifyVictory();
         }
         if (gameObject.layer == 3)
@@ -101,7 +101,7 @@ public class Character : MonoBehaviour
         component.AttackValue = characterAttackValue;
         component.Objetive = isEnemyOf;
 
-        yield return new WaitForSeconds(8f);
+        yield return new WaitForSeconds(5f);
         Destroy(spawnedBullet);
     }
 
@@ -111,7 +111,7 @@ public class Character : MonoBehaviour
             return;
 
         characterCurrentHealth -= damageAmount;
-        if (characterCurrentHealth <= 0) StartCoroutine(Death());
+        if (characterCurrentHealth <= 0 && isDying != true) StartCoroutine(Death());
     }
 
     private bool IsWalkable(Vector2 nextPos)

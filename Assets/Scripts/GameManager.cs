@@ -121,41 +121,30 @@ public class GameManager : MonoBehaviour
 
     public void MatchToMenu()
     {
-        enemySpawner.enabled = false;
-        healthBar.SetActive(false);
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        if (enemies != null)
-        {
-            foreach(GameObject enemy in enemies)
-            {
-                Destroy(enemy);
-            }
-        }
-        mainCamera.SetActive(true);
-        playerReference.gameObject.SetActive(false);
+        ResetGame();
         menuObject.SetActive(true);
-        inGameButton.SetActive(false);
+        mainCamera.SetActive(true);
     }
 
     public void DefeatToMenu()
     {
+        ResetGame();
+
         menuObject.SetActive(true);
         defeatObject.SetActive(false);
         slimeHealthObject.SetActive(false);
-
-        ResetGame();
     }
 
     public void VictoryToMenu()
     {
+        ResetGame();
+
         healthBar.SetActive(false);
         playerReference.gameObject.SetActive(false);
         mainCamera.SetActive(true);
         menuObject.SetActive(true);
         victoryPanel.SetActive(false);
         slimeHealthObject.SetActive(false);
-
-        ResetGame();
     }
 
     public void CreditsToMenu()
@@ -203,6 +192,7 @@ public class GameManager : MonoBehaviour
     {
         hordeNumber = 0;
         enemySpawner.SpawnEnemyAmount = 0;
+        enemySpawner.enabled = false;
         playerReference.gameObject.SetActive(false);
         slimeHealthObject.SetActive(false);
         healthBar.SetActive(false);
@@ -212,6 +202,11 @@ public class GameManager : MonoBehaviour
         slimeBoss.GetComponent<Enemy>().isDying = false;
         playerReference.EliminationCount = 0;
         portal.SetActive(false);
+        inGameButton.SetActive(false);
+        tutorial.SetActive(false);
+        readyText.gameObject.SetActive(false);
+
+        StopAllCoroutines();
 
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 

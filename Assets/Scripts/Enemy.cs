@@ -19,13 +19,17 @@ public class Enemy : Character
     [SerializeField] private float minDistance = 0.1f;
     [SerializeField] private float timeBetweenAttacks = 0.5f;
     private float timer;
+    private int attackType = 0;
     private Transform playerReference;
     private Vector3 playerPosition;
 
     private void Awake()
     {
-        playerReference = GameObject.Find("Player").GetComponent<Transform>();
         animator = GetComponent<CharacterAnimator>();
+        if (GameObject.Find("Player"))
+            playerReference = GameObject.Find("Player").GetComponent<Transform>();
+        else
+            Debug.LogError($"{gameObject.name}: The player is not active");
     }
 
     private void Update()
@@ -84,34 +88,44 @@ public class Enemy : Character
                 case EnemyBehaviour.Boss:
                     if (timer > timeBetweenAttacks)
                     {
-                        int attackType = Random.Range(0, 2);
+                        switch (attackType)
+                        {
+                            case 0:
+                                ShootInAllDirections(new Vector2[] { Vector2.up, Vector2.down, Vector2.left, Vector2.right });
+                                break;
+                            case 1:
+                                ShootInAllDirections(new Vector2[] { new Vector2(1, 1).normalized, new Vector2(1, -1).normalized,
+                                                new Vector2(-1, 1).normalized, new Vector2(-1, -1).normalized });
+                                break;
+                            case 2:
+                                ShootInAllDirections(new Vector2[] { Vector2.up, Vector2.down, Vector2.left, Vector2.right,
+                                                new Vector2(1, 1).normalized, new Vector2(1, -1).normalized,
+                                                new Vector2(-1, 1).normalized, new Vector2(-1, -1).normalized });  
+                                break;
+                            default:
+                                Debug.LogError($"{gameObject.name}: Invalid attack type!");
+                                break;
+                        }
 
-                        if (attackType == 0)
-                        {
-                            Vector2[] directions1 = { Vector2.up, Vector2.down, Vector2.left, Vector2.right };
-                            foreach (Vector2 direction in directions1)
-                            {
-                                StartCoroutine(Shoot(direction));
-                            }
-                        }
-                        else
-                        {
-                            Vector2[] directions2 = { new Vector2(1, 1).normalized, new Vector2(1, -1).normalized,
-                                       new Vector2(-1, 1).normalized, new Vector2(-1, -1).normalized };
-                            foreach (Vector2 direction in directions2)
-                            {
-                                StartCoroutine(Shoot(direction));
-                            }
-                        }
+                        attackType++;
+                        if (attackType >= 3)
+                            attackType = 0;
 
                         timer = 0f;
                     }
                     break;
-
                 default:
-                    Debug.LogError("This enemy has not behaviour");
+                    Debug.LogError($"{gameObject.name}: This enemy has not behaviour!");
                     break;
             }
+        }
+    }
+
+    void ShootInAllDirections(Vector2[] directions)
+    {
+        foreach (Vector2 direction in directions)
+        {
+            StartCoroutine(Shoot(direction));
         }
     }
 
